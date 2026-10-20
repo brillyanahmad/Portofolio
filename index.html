@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brillyan Ahmad Adi Prayanto - Liquid Glass Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        liquid: {
+                            cyan: '#00f2fe',
+                            violet: '#9055ff',
+                            magenta: '#ff007f',
+                            dark: '#0a0d18',
+                            cardBg: 'rgba(255, 255, 255, 0.05)',
+                            cardBorder: 'rgba(255, 255, 255, 0.15)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styling & Dark Dual-Tone Liquid Theme */
+        body {
+            background-color: #060810;
+            color: #f1f5f9;
+            overflow-x: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Fluid Canvas Layer */
+        #fluid-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(40px) contrast(1.2);
+            opacity: 0.85;
+        }
+
+        /* Advanced Liquid Glassmorphism Effect */
+        .liquid-glass {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.02) 100%
+            );
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            border-left: 1px solid rgba(255, 255, 255, 0.28);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Liquid Refraction Light Shimmer Overlay */
+        .liquid-glass::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle at 50% 0%,
+                rgba(255, 255, 255, 0.15) 0%,
+                transparent 50%
+            );
+            pointer-events: none;
+            transform: rotate(-15deg);
+        }
+
+        /* Dual Tone Text Gradients */
+        .gradient-dual-text {
+            background: linear-gradient(135deg, #00f2fe 0%, #9055ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-cyan-text {
+            background: linear-gradient(135deg, #ffffff 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Dual Tone Glowing Buttons */
+        .liquid-btn-dual {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2) 0%, rgba(144, 85, 255, 0.2) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .liquid-btn-dual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.6) 0%, rgba(144, 85, 255, 0.6) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .liquid-btn-dual:hover {
+            border-color: rgba(0, 242, 254, 0.8);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4), 0 0 40px rgba(144, 85, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .liquid-btn-dual:hover::after {
+            opacity: 1;
+        }
+
+        .liquid-btn-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060810;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00f2fe, #9055ff);
+            border-radius: 4px;
+        }
+
+        /* Gloss Edge Lighting Animation */
+        @keyframes liquidGlow {
+            0%, 100% { border-color: rgba(0, 242, 254, 0.3); }
+            50% { border-color: rgba(144, 85, 255, 0.5); }
+        }
+
+        .glow-border {
+            animation: liquidGlow 6s infinite alternate;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-liquid-cyan selection:text-black">
+
+    <!-- Interactive Liquid Fluid Canvas Background -->
+    <canvas id="fluid-canvas"></canvas>
+
+    <!-- Floating Liquid Header / Navbar -->
+    <header class="fixed top-4 left-0 right-0 z-50 px-4 max-w-5xl mx-auto">
+        <nav class="liquid-glass rounded-full px-6 py-3 flex items-center justify-between shadow-2xl glow-border">
+            <!-- Brand -->
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-liquid-cyan to-liquid-violet p-[1.5px] flex items-center justify-center">
+                    <div class="w-full h-full bg-slate-950/80 rounded-full flex items-center justify-center text-white font-display font-bold text-sm group-hover:scale-105 transition">
+                        BA
+                    </div>
+                </div>
+                <span class="font-display font-bold text-base tracking-wide text-white group-hover:text-liquid-cyan transition">
+                    Brillyan<span class="gradient-dual-text">.dev</span>
+                </span>
+            </a>
+
+            <!-- Nav Links -->
+            <div class="hidden sm:flex items-center gap-6 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-liquid-cyan transition">Tentang</a>
+                <a href="#skills" class="hover:text-liquid-violet transition">Keahlian</a>
+                <a href="#projects" class="hover:text-liquid-cyan transition">Proyek & Peran</a>
+            </div>
+
+            <!-- CTA Instagram Button -->
+            <a href="https://www.instagram.com/bryann_ajaa" target="_blank" rel="noopener noreferrer" 
+               class="liquid-btn-dual rounded-full px-4 py-1.5 text-xs font-semibold text-white flex items-center gap-2">
+                <span class="liquid-btn-content flex items-center gap-1.5">
+                    <i data-lucide="instagram" class="w-3.5 h-3.5 text-liquid-cyan"></i>
+                    <span>@bryann_ajaa</span>
+                </span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 pt-28 pb-16 space-y-16">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="liquid-glass rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <!-- Text Content -->
+                <div class="md:col-span-8 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-filter blur-md text-xs font-medium text-slate-300">
+                        <span class="w-2 h-2 rounded-full bg-liquid-cyan animate-ping"></span>
+                        <span class="text-liquid-cyan font-bold">KOKPIT Leader</span> & Tech Enthusiast
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold font-display leading-none tracking-tight">
+                        Brillyan Ahmad <br>
+                        <span class="gradient-dual-text">Adi Prayanto</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                        Siswa <span class="text-white font-semibold">SMA Negeri 3 Jombang (Kelas XI-3)</span> & Ketua <span class="text-liquid-cyan font-semibold">KOKPIT</span> (Komunitas Kreatif Pengembang IT). Berfokus pada <span class="text-liquid-violet font-semibold">Web Development, Cybersecurity / CTF</span>, dan <span class="text-white font-semibold">Digital Illustration</span>.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="https://www.instagram.com/bryann_ajaa" target="_blank" rel="noopener noreferrer" 
+                           class="liquid-btn-dual rounded-2xl px-6 py-3 text-sm font-semibold text-white flex items-center gap-2">
+                            <span class="liquid-btn-content flex items-center gap-2">
+                                <i data-lucide="instagram" class="w-4 h-4 text-liquid-cyan"></i>
+                                <span>Kunjungi Instagram</span>
+                            </span>
+                        </a>
+                        <a href="#about" class="px-6 py-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 backdrop-filter blur-lg text-sm font-semibold text-slate-200 transition">
+                            Pelajari Lebih Lanjut
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Profile Glass Card Display -->
+                <div class="md:col-span-4 flex justify-center">
+                    <div class="relative w-full max-w-[240px] aspect-square rounded-3xl p-1 bg-gradient-to-br from-liquid-cyan/40 via-transparent to-liquid-violet/40 shadow-2xl">
+                        <div class="w-full h-full bg-slate-950/80 rounded-[22px] overflow-hidden relative flex flex-col justify-end p-5 border border-white/10 group">
+                            <!-- Image / Aesthetic Placeholder -->
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" 
+                                 alt="Brillyan Ahmad Adi Prayanto" 
+                                 class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500"
+                                 onerror="this.src='https://placehold.co/400x400/0a0d18/00f2fe?text=BAAP'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent"></div>
+                            
+                            <div class="relative z-10 space-y-1">
+                                <span class="text-[10px] uppercase font-bold tracking-widest text-liquid-cyan">SMAN 3 Jombang</span>
+                                <h3 class="text-base font-bold font-display text-white">XI-3 Student</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME SECTION -->
+        <section id="about" class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <div class="md:col-span-8 liquid-glass rounded-3xl p-8 space-y-4">
+                <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+                    <div class="p-2 rounded-xl bg-liquid-cyan/10 border border-liquid-cyan/30 text-liquid-cyan">
+                        <i data-lucide="user-check" class="w-5 h-5"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold font-display text-white">Tentang Saya</h2>
+                </div>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Saya adalah seorang pelajar yang berdedikasi tinggi di <span class="text-white font-semibold">SMA Negeri 3 Jombang</span>. Selain akademik di kelas XI-3, saya mengasah kemampuan kepemimpinan sebagai Ketua Umum <span class="text-liquid-cyan font-semibold">KOKPIT</span> (Komunitas Kreatif Pengembang IT).
+                </p>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Minat utama saya mencakup pengembangan web modern, eksplorasi keamanan siber melalui kompetisi <span class="text-liquid-violet font-semibold">Capture The Flag (CTF)</span>, serta pembuatan karya <span class="text-white font-semibold">desain grafis & ilustrasi digital</span>.
+                </p>
+
+                <!-- Mini Cards -->
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                        <i data-lucide="shield-alert" class="w-5 h-5 text-liquid-cyan mb-2"></i>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase">Minat Khusus</h4>
+                        <p class="text-sm font-semibold text-white">Cybersecurity & CTF</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                        <i data-lucide="code-2" class="w-5 h-5 text-liquid-violet mb-2"></i>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase">Fokus Utama</h4>
+                        <p class="text-sm font-semibold text-white">Web Dev & Design</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Card -->
+            <div class="md:col-span-4 space-y-6">
+                <div class="liquid-glass rounded-3xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold font-display text-white flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-liquid-cyan"></i> Visi & Arah
+                    </h3>
+                    <p class="text-xs text-slate-300 leading-relaxed italic">
+                        "Menggabungkan fungsionalitas pemrograman dengan keindahan estetika visual untuk menghasilkan solusi digital yang aman dan berdampak."
+                    </p>
+                </div>
+
+                <div class="liquid-glass rounded-3xl p-6 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs font-semibold text-slate-400 block">Sosial Media</span>
+                        <span class="text-sm font-bold text-white">Instagram Resmi</span>
+                    </div>
+                    <a href="https://www.instagram.com/bryann_ajaa" target="_blank" rel="noopener noreferrer" 
+                       class="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-liquid-cyan transition">
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS & EXPERTISE SECTION -->
+        <section id="skills" class="liquid-glass rounded-3xl p-8 space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold font-display text-white">Keahlian & Teknologi</h2>
+                    <p class="text-xs text-slate-400">Teknologi dan tools yang sering saya gunakan</p>
+                </div>
+                <div class="p-2 rounded-xl bg-liquid-violet/10 border border-liquid-violet/30 text-liquid-violet">
+                    <i data-lucide="cpu" class="w-5 h-5"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <!-- Skill 1 -->
+                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-liquid-cyan/40 transition">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-white flex items-center gap-2">
+                            <i data-lucide="terminal" class="w-4 h-4 text-liquid-cyan"></i> C++ & Python
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400">Logika dasar, pemrograman prosedural & skrip otomatisasi.</p>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-liquid-violet/40 transition">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-white flex items-center gap-2">
+                            <i data-lucide="globe" class="w-4 h-4 text-liquid-violet"></i> Web Development
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400">Situs web modern, interaktif & responsif dengan HTML, CSS, JS.</p>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-liquid-cyan/40 transition">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-white flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-liquid-cyan"></i> Cybersecurity / CTF
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400">Eksplorasi tantangan keamanan web, kriptografi, dan analisis CTF.</p>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-liquid-violet/40 transition">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-white flex items-center gap-2">
+                            <i data-lucide="pen-tool" class="w-4 h-4 text-liquid-violet"></i> Digital Illustration
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400">Desain ilustrasi vektor, seni digital & branding visual.</p>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-liquid-cyan/40 transition">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-white flex items-center gap-2">
+                            <i data-lucide="sliders" class="w-4 h-4 text-liquid-cyan"></i> Lightroom CC
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400">Pengeditan foto profesional, color grading, & retouching.</p>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-liquid-violet/40 transition">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-sm text-white flex items-center gap-2">
+                            <i data-lucide="layout" class="w-4 h-4 text-liquid-violet"></i> Graphic Design
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-400">Pembuatan konten visual media sosial & poster acara.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS & ROLES SECTION -->
+        <section id="projects" class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold font-display text-white">Peran & Proyek</h2>
+                    <p class="text-xs text-slate-400">Pengalaman organisasi & hasil karya</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Card 1: KOKPIT -->
+                <div class="liquid-glass rounded-3xl p-6 space-y-4 hover:-translate-y-1 transition duration-300">
+                    <div class="flex justify-between items-start">
+                        <div class="p-3 rounded-2xl bg-liquid-cyan/10 border border-liquid-cyan/30 text-liquid-cyan">
+                            <i data-lucide="crown" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 border border-white/10 text-slate-300">Kepemimpinan</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold font-display text-white">Ketua Umum KOKPIT</h3>
+                        <p class="text-xs text-liquid-cyan font-semibold">Komunitas Kreatif Pengembang IT SMAN 3 Jombang</p>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Memimpin dan mengelola komunitas IT sekolah, menyelenggarakan pelatihan coding internal, dan mengoordinasikan tim pengembang proyek IT.
+                    </p>
+                </div>
+
+                <!-- Card 2: BASTYASAKA -->
+                <div class="liquid-glass rounded-3xl p-6 space-y-4 hover:-translate-y-1 transition duration-300">
+                    <div class="flex justify-between items-start">
+                        <div class="p-3 rounded-2xl bg-liquid-violet/10 border border-liquid-violet/30 text-liquid-violet">
+                            <i data-lucide="flag" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 border border-white/10 text-slate-300">Organisasi</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold font-display text-white">BASTYASAKA</h3>
+                        <p class="text-xs text-liquid-violet font-semibold">Aktif Organisasi Sekolah</p>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Berperan aktif dalam kegiatan ekstrakurikuler & keorganisasian sekolah, mendukung kelancaran acara dan dokumentasi visual.
+                    </p>
+                </div>
+
+                <!-- Card 3: Cireng Design / Project -->
+                <div class="liquid-glass rounded-3xl p-6 space-y-4 hover:-translate-y-1 transition duration-300">
+                    <div class="flex justify-between items-start">
+                        <div class="p-3 rounded-2xl bg-liquid-cyan/10 border border-liquid-cyan/30 text-liquid-cyan">
+                            <i data-lucide="palette" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 border border-white/10 text-slate-300">Branding Design</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold font-display text-white">Cireng Design & Branding</h3>
+                        <p class="text-xs text-liquid-cyan font-semibold">Proyek Desain Grafis Kreatif</p>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Merancang identitas visual, maskot, dan kemasan kreatif untuk produk lokal dengan pendekatan ilustrasi digital modern.
+                    </p>
+                </div>
+
+                <!-- Card 4: CTF & Security Labs -->
+                <div class="liquid-glass rounded-3xl p-6 space-y-4 hover:-translate-y-1 transition duration-300">
+                    <div class="flex justify-between items-start">
+                        <div class="p-3 rounded-2xl bg-liquid-violet/10 border border-liquid-violet/30 text-liquid-violet">
+                            <i data-lucide="shield" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-white/10 border border-white/10 text-slate-300">Cybersecurity</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold font-display text-white">CTF & Security Exploration</h3>
+                        <p class="text-xs text-liquid-violet font-semibold">Tantangan Keamanan Siber</p>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Riset mandiri dan partisipasi dalam tantangan Capture The Flag (CTF) bidang Web Exploitation & Reverse Engineering dasar.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT & FOOTER -->
+        <section class="liquid-glass rounded-3xl p-8 text-center space-y-6">
+            <h2 class="text-3xl font-extrabold font-display text-white">Terhubung Lewat Instagram</h2>
+            <p class="text-slate-300 text-sm max-w-md mx-auto">
+                Ingin berdiskusi seputar proyek IT, kolaborasi KOKPIT, atau sekadar menyapa?
+            </p>
+            <div>
+                <a href="https://www.instagram.com/bryann_ajaa" target="_blank" rel="noopener noreferrer" 
+                   class="liquid-btn-dual inline-flex items-center gap-2 rounded-2xl px-8 py-3 text-sm font-semibold text-white">
+                    <span class="liquid-btn-content flex items-center gap-2">
+                        <i data-lucide="instagram" class="w-5 h-5 text-liquid-cyan"></i>
+                        <span>Buka Profil @bryann_ajaa</span>
+                    </span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-white/10 py-6 text-center text-xs text-slate-400">
+        <p>© 2026 Brillyan Ahmad Adi Prayanto. Dual Tone Liquid Glass Style.</p>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // Lucide Icons Init
+        lucide.createIcons();
+
+        // Fluid Dynamic Canvas Background Simulation
+        const canvas = document.getElementById('fluid-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        // Fluid Blob Particles
+        class FluidBlob {
+            constructor(color) {
+                this.color = color;
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * 200 + 150;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < -100 || this.x > width + 100) this.vx *= -1;
+                if (this.y < -100 || this.y > height + 100) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                const grad = ctx.createRadialGradient(this.x, this.y, 10, this.x, this.y, this.radius);
+                grad.addColorStop(0, this.color);
+                grad.addColorStop(1, 'rgba(0,0,0,0)');
+                ctx.fillStyle = grad;
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Dual Tone Colors: Neon Cyan (#00f2fe) & Deep Violet (#9055ff)
+        const blobs = [
+            new FluidBlob('rgba(0, 242, 254, 0.45)'),
+            new FluidBlob('rgba(144, 85, 255, 0.45)'),
+            new FluidBlob('rgba(0, 242, 254, 0.35)'),
+            new FluidBlob('rgba(144, 85, 255, 0.35)')
+        ];
+
+        function animateFluid() {
+            ctx.clearRect(0, 0, width, height);
+            blobs.forEach(blob => {
+                blob.update();
+                blob.draw();
+            });
+            requestAnimationFrame(animateFluid);
+        }
+
+        window.onload = function() {
+            animateFluid();
+        };
+    </script>
+</body>
+</html>
